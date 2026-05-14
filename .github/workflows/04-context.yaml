@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: print info
         run: |
-          # echo "${{ toJson(github) }}" # The command to execute
+          echo "${{ toJson(github) }}" # The command to execute
           echo "branch name: ${{ github.ref_name }}"
       
       - name: access env variables
