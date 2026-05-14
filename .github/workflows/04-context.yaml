@@ -10,6 +10,10 @@ jobs:
   # Job name
   github-context:
     runs-on: ubuntu-latest # Github hosted runners
+    outputs:
+      image-name: ${{ steps.tag.outputs.image-name }}
+      image-version: ${{ steps.tag.outputs.version }}
+
     steps:
       - name: print info
         run: |
@@ -30,3 +34,34 @@ jobs:
       - name: print variables
         run: |
           echo "DB URL: ${{ vars.DB_URL }}"
+      
+      - name: image tag
+        id: tag # id is mandatory to access the output of this step in later steps
+        run: |
+          echo "version=1.0.0" >> $GITHUB_OUTPUT
+          echo "image-name=catalogue" >> $GITHUB_OUTPUT
+
+      - name: print previous step output
+        run: |
+          echo "Image name: ${{ steps.tag.outputs.image-name }}"
+          echo "Version: ${{ steps.tag.outputs.version }}"
+      
+      # useful with in the job
+      - name: github env
+        run: |
+          echo "Course=github-actions" >> $GITHUB_ENV
+          echo "Duration=5hours" >> $GITHUB_ENV
+
+      - name: print github env
+        run: |
+          echo "Course: $Course"
+          echo "Duration: $Duration"
+  
+  deploy:
+    needs: github-context # means depends on above job
+    runs-on: ubuntu-latest # Github hosted runners
+    steps:
+      - name: print github env in another job
+        run: |
+          echo "Image Name: ${{ needs.github-context.outputs.image-name }}"
+          echo "Image Version: ${{ needs.github-context.outputs.image-version }}"
