@@ -21,3 +21,12 @@ jobs:
           echo "Project: $project"
           echo "Component: $component"
           echo "Environment: $environment"
+      
+      - name: print secrets
+        run: |
+          echo "DB User name: ${{ secrets.DB_USER }}"
+          echo "DB password: ${{ secrets.DB_PASSWORD }}"
+      
+      - name: print variables
+        run: |
+          echo "DB URL: ${{ vars.DB_URL }}"
