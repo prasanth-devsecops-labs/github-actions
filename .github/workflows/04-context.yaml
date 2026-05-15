@@ -71,3 +71,9 @@ jobs:
       steps:
       - name: run sonar scan
         run: echo "Sonar Scan"
+      
+      - name: print job Contexts
+        run: echo "${{ toJson(job) }}"
+
+      - name: print runner Contexts
+        run: echo "${{ toJson(runner) }}"
