@@ -1,5 +1,7 @@
 name: Hello World Workflow
-on: [push] # Triggers the workflow on every push to the repository
+# on: [push] # Triggers the workflow on every push to the repository
+on:
+  workflow_dispatch:
 
 jobs:
   # Job name
